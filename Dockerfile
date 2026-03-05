@@ -1,3 +1,4 @@
+HEAD
 # Stage 1: Builder (Tahap persiapan file)
 FROM alpine:latest AS builder
 WORKDIR /app
@@ -12,3 +13,11 @@ COPY --from=builder /app/index.html /usr/share/nginx/html/
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
+
+FROM nginx:stable-alpine-slim
+
+WORKDIR /usr/share/nginx/html
+
+COPY app/index.html .
+
+EXPOSE 80
